@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"strconv"
-	"strings"
+
+	fileParsing "github.com/MirahImage/AdventOfCode2017/FileParsing"
 )
 
 const input = "input.txt"
@@ -32,26 +31,9 @@ func NewJumpsToOutside(instructions []int) int {
 	return jumps
 }
 
-func sliceAtoi(a []string) ([]int, error) {
-	var nums []int
-	for _, s := range a {
-		i, err := strconv.Atoi(s)
-		if err != nil {
-			return nums, err
-		}
-		nums = append(nums, i)
-	}
-	return nums, nil
-}
-
 func ReadInput(file string) []int {
-	b, err := ioutil.ReadFile(file)
-	if err != nil {
-		panic(err)
-	}
-	lines := strings.Split(string(b), "\n")
-	lines = lines[:len(lines)-1] //handle trailing newline
-	instructions, e := sliceAtoi(lines)
+	lines := fileParsing.ReadFileToLines(file)
+	instructions, e := fileParsing.SliceAtoi(lines)
 	if e != nil {
 		panic(e)
 	}
