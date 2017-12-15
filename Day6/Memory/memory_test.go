@@ -19,8 +19,19 @@ var _ = Describe("Memory", func() {
 		}
 	})
 
-	Describe("Reallocate", func() {
+	Describe("largestBank", func() {
+		It("should find the largest bank", func() {
+			bank, _ := mem.LargestBank()
+			Expect(bank).To(Equal(2))
+		})
 
+		It("should return the size of the largest bank", func() {
+			_, max := mem.LargestBank()
+			Expect(max).To(Equal(7))
+		})
+	})
+
+	Describe("Reallocate", func() {
 		It("should reallocate the bank with the most blocks", func() {
 			mem.Reallocate()
 			Expect(mem.Banks[2]).To(BeNumerically("<", 7))
