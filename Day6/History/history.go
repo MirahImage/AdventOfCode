@@ -13,17 +13,17 @@ type History struct {
   TimeSteps []Bank
 }
 
-//Logs a memory state, returns true if the memory state has been logged already
-func (h *History) Log(m Memory) bool {
+//Logs a memory state, returns index of the repeated memory state, or -1 if it has not been logged already
+func (h *History) Log(m Memory) int {
   toAppend := Bank{
     Banks: make([]int, len(m.Banks)),
   }
   copy(toAppend.Banks, m.Banks)
-  for _, bank := range h.TimeSteps {
+  for i, bank := range h.TimeSteps {
     if reflect.DeepEqual(bank, toAppend) {
-      return true
+      return i
     }
   }
   h.TimeSteps = append(h.TimeSteps, toAppend)
-  return false
+  return -1
 }

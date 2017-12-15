@@ -32,18 +32,18 @@ var _ = Describe("History", func() {
 			Expect(h.TimeSteps).To(Equal([]Bank{b0}))
 		})
 
-		It("should return true if the state has been seen before", func() {
+		It("should return the index if the state has been seen before", func() {
 			h.Log(m)
-			Expect(h.Log(m)).To(BeTrue())
+			Expect(h.Log(m)).To(Equal(0))
 		})
 
 		It("should add a new state to TimeSteps when logged after reallocation", func() {
 			h.Log(m)
 			m.Reallocate()
-			Expect(h.Log(m)).To(BeFalse())
+			Expect(h.Log(m)).To(Equal(-1))
 			Expect(len(h.TimeSteps)).To(Equal(2))
 			m.Reallocate()
-			Expect(h.Log(m)).To(BeFalse())
+			Expect(h.Log(m)).To(Equal(-1))
 			Expect(len(h.TimeSteps)).To(Equal(3))
 		})
 	})
