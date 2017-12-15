@@ -10,20 +10,6 @@ import (
 
 var _ = Describe("Main", func() {
 
-	Describe("LineToInts", func() {
-		var (
-			tabSeparatedIntString string
-		)
-
-		BeforeEach(func() {
-			tabSeparatedIntString = "5\t1\t9\t5"
-		})
-
-		It("should return a slice of ints", func() {
-			Expect(LineToInts(tabSeparatedIntString)).To(Equal([]int{5, 1, 9, 5}))
-		})
-	})
-
 	Describe("LinesToRows", func() {
 		var (
 			lines        []string
