@@ -7,13 +7,13 @@ import (
 )
 
 func SliceAtoi(a []string) ([]int, error) {
-	var nums []int
-	for _, s := range a {
-		i, err := strconv.Atoi(s)
+	nums := make([]int, len(a))
+	for i, s := range a {
+		num, err := strconv.Atoi(s)
 		if err != nil {
 			return nums, err
 		}
-		nums = append(nums, i)
+		nums[i] = num
 	}
 	return nums, nil
 }
