@@ -15,7 +15,7 @@ var _ = Describe("Main", func() {
 		ex1        Passphrase
 		ex2        Passphrase
 		ex3        Passphrase
-		testBytes  []byte
+		testLines  []string
 	)
 
 	BeforeEach(func() {
@@ -30,7 +30,7 @@ var _ = Describe("Main", func() {
 			Words: []string{"aa", "bb", "cc", "dd", "aaa"},
 		}
 		testOutput = []Passphrase{ex1, ex2, ex3}
-		testBytes = []byte("aa bb cc dd ee\naa bb cc dd aa\naa bb cc dd aaa\n")
+		testLines = []string{"aa bb cc dd ee", "aa bb cc dd aa", "aa bb cc dd aaa"}
 	})
 
 	Describe("ReadInput", func() {
@@ -43,13 +43,13 @@ var _ = Describe("Main", func() {
 		})
 	})
 
-	Describe("BytesToPassphrases", func() {
+	Describe("LinesToPassphrases", func() {
 		It("should return a slice of Passphrase", func() {
-			Expect(BytesToPassphrases(testBytes)).To(BeAssignableToTypeOf([]Passphrase{}))
+			Expect(LinesToPassphrases(testLines)).To(BeAssignableToTypeOf([]Passphrase{}))
 		})
 
 		It("should parse the test phrase into the passphrases", func() {
-			Expect(BytesToPassphrases(testBytes)).To(Equal(testOutput))
+			Expect(LinesToPassphrases(testLines)).To(Equal(testOutput))
 		})
 
 	})

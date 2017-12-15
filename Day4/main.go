@@ -2,29 +2,25 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"strings"
 
 	. "github.com/MirahImage/AdventOfCode2017/Day4/passphrase"
+	fileParsing "github.com/MirahImage/AdventOfCode2017/FileParsing"
 )
 
 const input = "input.txt"
 
-func BytesToPassphrases(bytes []byte) []Passphrase {
-	lines := strings.Split(string(bytes), "\n")
-	var passphrases = make([]Passphrase, len(lines)-1)
-	for i, _ := range passphrases {
-		passphrases[i] = Passphrase{Words: strings.Split(lines[i], " ")}
+func LinesToPassphrases(lines []string) []Passphrase {
+	var passphrases = make([]Passphrase, len(lines))
+	for i, line := range lines {
+		passphrases[i] = Passphrase{Words: strings.Split(line, " ")}
 	}
 	return passphrases
 }
 
 func ReadInput(input string) []Passphrase {
-	b, err := ioutil.ReadFile(input)
-	if err != nil {
-		panic(err)
-	}
-	return BytesToPassphrases(b)
+	lines := fileParsing.ReadFileToLines(input)
+	return LinesToPassphrases(lines)
 }
 
 func NumValid(passphrases []Passphrase, validator func(*Passphrase) bool) int {
