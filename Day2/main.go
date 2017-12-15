@@ -2,42 +2,25 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"strconv"
 	"strings"
 
 	. "github.com/MirahImage/AdventOfCode2017/Day2/row"
 	. "github.com/MirahImage/AdventOfCode2017/Day2/spreadsheet"
+	fileParsing "github.com/MirahImage/AdventOfCode2017/FileParsing"
 )
 
 const input = "input.txt"
 
-func sliceAtoi(a []string) ([]int, error) {
-	var nums []int
-	for _, s := range a {
-		i, err := strconv.Atoi(s)
-		if err != nil {
-			return nums, err
-		}
-		nums = append(nums, i)
-	}
-	return nums, nil
-}
-
 func LineToInts(line string) []int {
-	if strings.Compare(line, "") == 0 {
-		return []int{}
-	}
 	numberStrings := strings.Split(line, "\t")
-	numbers, err := sliceAtoi(numberStrings)
+	numbers, err := fileParsing.SliceAtoi(numberStrings)
 	if err != nil {
 		panic(err)
 	}
 	return numbers
 }
 
-func BytesToRows(b []byte) []Row {
-	lines := strings.Split(string(b), "\n")
+func LinesToRows(lines []string) []Row {
 	var rows = make([]Row, len(lines))
 	for i, line := range lines {
 		rows[i] = Row{Entries: LineToInts(line)}
@@ -46,11 +29,8 @@ func BytesToRows(b []byte) []Row {
 }
 
 func ReadInput(file string) Spreadsheet {
-	b, err := ioutil.ReadFile(file)
-	if err != nil {
-		panic(err)
-	}
-	return Spreadsheet{Rows: BytesToRows(b)}
+	lines := fileParsing.ReadFileToLines(file)
+	return Spreadsheet{Rows: LinesToRows(lines)}
 }
 
 func main() {
