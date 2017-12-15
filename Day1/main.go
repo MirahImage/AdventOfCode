@@ -2,31 +2,17 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"strconv"
 	"strings"
 
 	. "github.com/MirahImage/AdventOfCode2017/Day1/captcha"
+	fileParsing "github.com/MirahImage/AdventOfCode2017/FileParsing"
 )
 
 const input = "input.txt"
 
-func sliceAtoi(a []string) ([]int, error) {
-	var nums []int
-	for _, s := range a {
-		i, err := strconv.Atoi(s)
-		if err != nil {
-			return nums, err
-		}
-		nums = append(nums, i)
-	}
-	return nums, nil
-}
-
-func bytesToDigits(b []byte) []int {
-	strs := strings.Split(string(b), "\n")
-	digitStrings := strings.Split(strs[0], "")
-	digits, err := sliceAtoi(digitStrings)
+func linesToDigits(lines []string) []int {
+	digitStrings := strings.Split(lines[0], "")
+	digits, err := fileParsing.SliceAtoi(digitStrings)
 	if err != nil {
 		panic(err)
 	}
@@ -34,11 +20,8 @@ func bytesToDigits(b []byte) []int {
 }
 
 func ReadInput(f string) []int {
-	b, err := ioutil.ReadFile(f)
-	if err != nil {
-		panic(err)
-	}
-	return bytesToDigits(b)
+	lines := fileParsing.ReadFileToLines(f)
+	return linesToDigits(lines)
 }
 
 func main() {

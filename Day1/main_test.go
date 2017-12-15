@@ -33,26 +33,4 @@ var _ = Describe("Main", func() {
 			Expect(ReadInput(shortFile)).To(Equal([]int{1, 1, 2, 2}))
 		})
 	})
-
-	/*Describe("sliceAtoi", func() {
-		It("should return a slice of ints and no error", func() {
-			Expect(sliceAtoi(digitStrings)).To(Equal([]int{1, 1}, nil))
-		})
-
-		Context("When a string contains a non-digit", func() {
-			BeforeEach(func() {
-				var (
-					nondigit  string
-					nondigitStrings []string
-					err error
-				)
-
-			})
-
-			It("should return an error if a string doesn't contain digits", func() {
-				Expect(sliceAtoi()).To()
-			})
-		})
-	})*/
-
 })
