@@ -114,10 +114,14 @@ var _ = Describe("Node", func() {
 					Weight:     69,
 					ChildNames: []string{},
 				}
+				node = NewNode(child)
 				node, err = node.Insert(notPresent)
 			})
 			It("should produce an error", func() {
 				Expect(err).Should(HaveOccurred())
+			})
+			It("should return the previous tree", func() {
+				Expect(node.Data).To(Equal(child))
 			})
 		})
 	})
