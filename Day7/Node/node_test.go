@@ -107,6 +107,8 @@ var _ = Describe("Node", func() {
 		Context("The inserted node does not belong to the tree", func() {
 			var (
 				notPresent ProgramData
+				parent     ProgramData
+				child      ProgramData
 			)
 			BeforeEach(func() {
 				notPresent = ProgramData{
@@ -114,12 +116,23 @@ var _ = Describe("Node", func() {
 					Weight:     69,
 					ChildNames: []string{},
 				}
+				child = ProgramData{
+					Name:       "gyxo",
+					Weight:     61,
+					ChildNames: []string{},
+				}
+				parent = ProgramData{
+					Name:       "ugml",
+					Weight:     68,
+					ChildNames: []string{"gyxo"},
+				}
 				node = NewNode(child)
 				node, _ = node.Insert(parent)
 				node, err = node.Insert(notPresent)
 			})
 			It("should produce an error", func() {
 				Expect(err).Should(HaveOccurred())
+				Expect(err).To(Not(BeNil()))
 			})
 			It("should contain the parent", func() {
 				Expect(node.IsMember(parent)).To(Not(BeNil()))
@@ -127,7 +140,7 @@ var _ = Describe("Node", func() {
 			It("should contain the child", func() {
 				Expect(node.IsMember(child)).To(Not(BeNil()))
 			})
-			It("should not contain the new node", func() {
+			It("should not contain the new program", func() {
 				Expect(node.IsMember(notPresent)).To(BeNil())
 			})
 			It("should not be nil", func() {
@@ -155,7 +168,7 @@ var _ = Describe("Node", func() {
 				ChildNames: []string{"gyxo"},
 			}
 			notPresent = ProgramData{
-				Name:       "tflo",
+				Name:       "notHere",
 				Weight:     69,
 				ChildNames: []string{},
 			}
