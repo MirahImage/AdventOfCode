@@ -115,13 +115,23 @@ var _ = Describe("Node", func() {
 					ChildNames: []string{},
 				}
 				node = NewNode(child)
+				node, _ = node.Insert(parent)
 				node, err = node.Insert(notPresent)
 			})
 			It("should produce an error", func() {
 				Expect(err).Should(HaveOccurred())
 			})
-			It("should return the previous tree", func() {
-				Expect(node.Data).To(Equal(child))
+			It("should contain the parent", func() {
+				Expect(node.IsMember(parent)).To(Not(BeNil()))
+			})
+			It("should contain the child", func() {
+				Expect(node.IsMember(child)).To(Not(BeNil()))
+			})
+			It("should not contain the new node", func() {
+				Expect(node.IsMember(notPresent)).To(BeNil())
+			})
+			It("should not be nil", func() {
+				Expect(node).To(Not(BeNil()))
 			})
 		})
 	})
