@@ -9,11 +9,3 @@ type Node struct {
 	Children []*Node
 	Parent   *Node
 }
-
-func (n *Node) IsParentOf(prog ProgramData) bool {
-	return n.Data.IsParent(prog)
-}
-
-func (n *Node) IsChildOf(prog ProgramData) bool {
-	return prog.IsParent(n.Data)
-}
