@@ -21,3 +21,16 @@ func (n *Node) Weight() int {
 	}
 	return weight
 }
+
+func (n *Node) Balanced() bool {
+	if len(n.Children) == 0 {
+		return true
+	}
+	child1weight := n.Children[0].Weight()
+	for _, child := range n.Children {
+		if child.Weight() != child1weight || !child.Balanced() {
+			return false
+		}
+	}
+	return true
+}
