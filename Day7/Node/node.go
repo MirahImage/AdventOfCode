@@ -9,3 +9,7 @@ type Node struct {
 	Children []*Node
 	Parent   *Node
 }
+
+func (n *Node) AddChild(child *Node) {
+	n.Children = append(n.Children, child)
+}
