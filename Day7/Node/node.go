@@ -13,3 +13,11 @@ type Node struct {
 func (n *Node) AddChild(child *Node) {
 	n.Children = append(n.Children, child)
 }
+
+func (n *Node) Weight() int {
+	weight := n.Data.Weight
+	for _, child := range n.Children {
+		weight += child.Weight()
+	}
+	return weight
+}

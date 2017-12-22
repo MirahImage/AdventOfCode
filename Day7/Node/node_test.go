@@ -68,4 +68,36 @@ var _ = Describe("Node", func() {
 		})
 	})
 
+	Describe("Weight", func() {
+		Context("There are no children", func() {
+			var (
+				child1 Node
+			)
+			BeforeEach(func() {
+				child1.Data = child1Data
+			})
+
+			It("should have weight equal to the stored Weight", func() {
+				Expect(child1.Weight()).To(Equal(child1Data.Weight))
+			})
+		})
+		Context("There are children", func() {
+			var (
+				parent Node
+				child1 Node
+				child2 Node
+			)
+			BeforeEach(func() {
+				parent.Data = parentData
+				child1.Data = child1Data
+				child2.Data = child2Data
+				parent.AddChild(&child1)
+				parent.AddChild(&child2)
+			})
+			It("should have weight equal to the sum of the parent and children", func() {
+				Expect(parent.Weight()).To(Equal(parentData.Weight + child1Data.Weight + child2Data.Weight))
+			})
+		})
+	})
+
 })
