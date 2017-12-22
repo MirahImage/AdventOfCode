@@ -54,6 +54,7 @@ var _ = Describe("Tree", func() {
 		})
 		It("should have identified the root", func() {
 			Expect(t.Root).To(Not(BeNil()))
+			Expect(t.Root.Data.Name).To(Equal("tknk"))
 		})
 	})
 })
