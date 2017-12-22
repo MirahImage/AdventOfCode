@@ -10,7 +10,7 @@ type ProgramData struct {
 	ChildNames []string
 }
 
-func (p *ProgramData) IsParent(data ProgramData) bool {
+func (p *ProgramData) IsParentOf(data ProgramData) bool {
 	for _, child := range p.ChildNames {
 		if strings.Compare(child, data.Name) == 0 {
 			return true

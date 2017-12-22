@@ -27,12 +27,12 @@ var _ = Describe("ProgramData", func() {
 		}
 	})
 
-	Describe("IsParent", func() {
+	Describe("IsParentOf", func() {
 		It("should return true if the program is a parent of the data", func() {
-			Expect(parent.IsParent(child)).To(BeTrue())
+			Expect(parent.IsParentOf(child)).To(BeTrue())
 		})
 		It("should return false if the program is not a parent of the data", func() {
-			Expect(child.IsParent(parent)).To(BeFalse())
+			Expect(child.IsParentOf(parent)).To(BeFalse())
 		})
 	})
 
