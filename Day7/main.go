@@ -36,4 +36,10 @@ func main() {
 	var t Tree
 	t.AddPrograms(progs)
 	fmt.Println("The root program is named", t.Root.Data.Name)
+	for _, node := range t.FindUnbalanced() {
+		fmt.Println(node.Data.Name, "is unbalanced, it's children are of weight")
+		for _, child := range node.Children {
+			fmt.Println(child.Data.Name, "is of total weight", child.Weight(), "and local weight", child.Data.Weight)
+		}
+	}
 }
