@@ -29,3 +29,13 @@ func (t *Tree) AddPrograms(progs []ProgramData) {
 		}
 	}
 }
+
+func (t *Tree) FindUnbalanced() []*Node {
+	var unbalanced []*Node
+	for i, _ := range t.Programs {
+		if !t.Programs[i].Balanced() {
+			unbalanced = append(unbalanced, &t.Programs[i])
+		}
+	}
+	return unbalanced
+}

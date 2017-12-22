@@ -4,6 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
+	. "github.com/MirahImage/AdventOfCode2017/Day7/Node"
 	. "github.com/MirahImage/AdventOfCode2017/Day7/ProgramData"
 	. "github.com/MirahImage/AdventOfCode2017/Day7/Tree"
 )
@@ -55,6 +56,64 @@ var _ = Describe("Tree", func() {
 		It("should have identified the root", func() {
 			Expect(t.Root).To(Not(BeNil()))
 			Expect(t.Root.Data.Name).To(Equal("tknk"))
+		})
+	})
+
+	Describe("FundUnbalanced", func() {
+		var (
+			t          Tree
+			parentData ProgramData
+			child1Data ProgramData
+			child2Data ProgramData
+			unbalanced []*Node
+		)
+		Context("The tree is balanced", func() {
+			BeforeEach(func() {
+				parentData = ProgramData{
+					Name:       "ugml",
+					Weight:     68,
+					ChildNames: []string{"gyxo", "ebii"},
+				}
+				child1Data = ProgramData{
+					Name:       "gyxo",
+					Weight:     61,
+					ChildNames: []string{},
+				}
+				child2Data = ProgramData{
+					Name:       "ebii",
+					Weight:     61,
+					ChildNames: []string{},
+				}
+				t.AddPrograms([]ProgramData{parentData, child1Data, child2Data})
+				unbalanced = t.FindUnbalanced()
+			})
+			It("should return an empty slice", func() {
+				Expect(len(unbalanced)).To(Equal(0))
+			})
+		})
+		Context("The tree is unbalanced", func() {
+			BeforeEach(func() {
+				parentData = ProgramData{
+					Name:       "ugml",
+					Weight:     68,
+					ChildNames: []string{"gyxo", "ebii"},
+				}
+				child1Data = ProgramData{
+					Name:       "gyxo",
+					Weight:     61,
+					ChildNames: []string{},
+				}
+				child2Data = ProgramData{
+					Name:       "ebii",
+					Weight:     69,
+					ChildNames: []string{},
+				}
+				t.AddPrograms([]ProgramData{parentData, child1Data, child2Data})
+				unbalanced = t.FindUnbalanced()
+			})
+			It("should return a non-empty slice", func() {
+				Expect(len(unbalanced)).To(BeNumerically(">", 0))
+			})
 		})
 	})
 })
