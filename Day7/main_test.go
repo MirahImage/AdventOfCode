@@ -1,12 +1,15 @@
 package main_test
 
 import (
+	"bytes"
+	"fmt"
 	"strings"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
 	. "github.com/MirahImage/AdventOfCode2017/Day7"
+	. "github.com/MirahImage/AdventOfCode2017/Day7/Node"
 	. "github.com/MirahImage/AdventOfCode2017/Day7/ProgramData"
 )
 
@@ -63,6 +66,63 @@ var _ = Describe("Main", func() {
 			for i, prog := range progs {
 				Expect(prog.ChildNames).To(Equal(expected[i].ChildNames))
 			}
+		})
+	})
+
+	Describe("PrintUnbalanced", func() {
+		var (
+			buff  bytes.Buffer
+			nodes []*Node
+		)
+		Context("Not given any nodes", func() {
+			BeforeEach(func() {
+				nodes = []*Node{}
+				PrintUnbalanced(&buff, nodes)
+			})
+			It("should not print anything", func() {
+				Expect(buff.Len()).To(Equal(0))
+			})
+		})
+		Context("Given a node with unbalanced children", func() {
+			var (
+				parent         Node
+				child1         Node
+				child2         Node
+				parentData     ProgramData
+				child1Data     ProgramData
+				child2Data     ProgramData
+				expectedOutput bytes.Buffer
+			)
+			BeforeEach(func() {
+				parentData = ProgramData{
+					Name:       "ugml",
+					Weight:     68,
+					ChildNames: []string{"gyxo", "ebii"},
+				}
+				child1Data = ProgramData{
+					Name:       "gyxo",
+					Weight:     61,
+					ChildNames: []string{},
+				}
+				child2Data = ProgramData{
+					Name:       "ebii",
+					Weight:     69,
+					ChildNames: []string{},
+				}
+				parent.Data = parentData
+				child1.Data = child1Data
+				child2.Data = child2Data
+				parent.AddChild(&child1)
+				parent.AddChild(&child2)
+				nodes = []*Node{&parent}
+				PrintUnbalanced(&buff, nodes)
+				fmt.Fprintln(&expectedOutput, parent.Data.Name, "is unbalanced, it's children are of weight")
+				fmt.Fprintln(&expectedOutput, child1.Data.Name, "is of total weight", child1.Weight(), "and local weight", child1.Data.Weight)
+				fmt.Fprintln(&expectedOutput, child2.Data.Name, "is of total weight", child2.Weight(), "and local weight", child2.Data.Weight)
+			})
+			It("should print the unbalanced parent name and children's weights", func() {
+				Expect(buff.String()).To(Equal(expectedOutput.String()))
+			})
 		})
 	})
 
