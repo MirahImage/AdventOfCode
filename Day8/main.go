@@ -60,9 +60,15 @@ func FindLargest(registers map[string]int) (string, int) {
 func main() {
 	registers := make(map[string]int)
 	instructions := fileParsing.ReadFileToLines(input)
+	largest := 0
 	for _, instruction := range instructions {
 		Execute(instruction, registers)
+		_, currentLargest := FindLargest(registers)
+		if currentLargest > largest {
+			largest = currentLargest
+		}
 	}
 	largestKey, largestVal := FindLargest(registers)
 	fmt.Println(largestKey, "contains the largest value", largestVal)
+	fmt.Println("The largest value was", largest)
 }
